@@ -1,12 +1,9 @@
-import React, { useState } from 'react';// oppure
-
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-
+import React, { useState } from 'react';
+import { Calendar, User, CreditCard, Settings, BarChart2, Bell, CheckCircle } from 'lucide-react';
 
 const BookingDashboard = () => {
   const [activeTab, setActiveTab] = useState('calendar');
   
-  // Dati di esempio
   const appointmentsData = [
     { id: 1, client: "Mario Rossi", service: "Taglio Capelli", date: "2024-11-12", time: "10:00", status: "confermato" },
     { id: 2, client: "Laura Bianchi", service: "Massaggio", date: "2024-11-12", time: "11:30", status: "in attesa" },
@@ -37,56 +34,113 @@ const BookingDashboard = () => {
         </div>
       </div>
 
-      {/* Statistiche */}
+      {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        {/* Stat cards */}
+        <div className="bg-white p-4 rounded-lg shadow">
+          <div className="flex justify-between items-center">
+            <h3 className="text-sm text-gray-500">Appuntamenti Oggi</h3>
+            <Calendar className="h-4 w-4 text-gray-500" />
+          </div>
+          <p className="text-2xl font-bold mt-2">{statsData.todayAppointments}</p>
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow">
+          <div className="flex justify-between items-center">
+            <h3 className="text-sm text-gray-500">Prenotazioni Settimanali</h3>
+            <User className="h-4 w-4 text-gray-500" />
+          </div>
+          <p className="text-2xl font-bold mt-2">{statsData.weeklyBookings}</p>
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow">
+          <div className="flex justify-between items-center">
+            <h3 className="text-sm text-gray-500">Fatturato Mensile</h3>
+            <CreditCard className="h-4 w-4 text-gray-500" />
+          </div>
+          <p className="text-2xl font-bold mt-2">{statsData.monthlyRevenue}</p>
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow">
+          <div className="flex justify-between items-center">
+            <h3 className="text-sm text-gray-500">Tasso Cancellazioni</h3>
+            <BarChart2 className="h-4 w-4 text-gray-500" />
+          </div>
+          <p className="text-2xl font-bold mt-2">{statsData.cancelationRate}</p>
+        </div>
       </div>
 
-      {/* Menu di Navigazione */}
+      {/* Navigation */}
       <div className="flex gap-4 mb-6 border-b">
         <button 
-          className={`px-4 py-2 flex items-center gap-2 ${activeTab === 'calendar' ? 'border-b-2 border-blue-500' : ''}`}
+          className={`px-4 py-2 flex items-center gap-2 ${
+            activeTab === 'calendar' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-gray-500'
+          }`}
           onClick={() => setActiveTab('calendar')}
         >
           <Calendar size={20} />
           Calendario
         </button>
-        {/* Altri tab */}
+        <button 
+          className={`px-4 py-2 flex items-center gap-2 ${
+            activeTab === 'clients' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-gray-500'
+          }`}
+          onClick={() => setActiveTab('clients')}
+        >
+          <User size={20} />
+          Clienti
+        </button>
+        <button 
+          className={`px-4 py-2 flex items-center gap-2 ${
+            activeTab === 'services' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-gray-500'
+          }`}
+          onClick={() => setActiveTab('services')}
+        >
+          <Settings size={20} />
+          Servizi
+        </button>
+        <button 
+          className={`px-4 py-2 flex items-center gap-2 ${
+            activeTab === 'reports' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-gray-500'
+          }`}
+          onClick={() => setActiveTab('reports')}
+        >
+          <BarChart2 size={20} />
+          Report
+        </button>
       </div>
 
-      {/* Lista Appuntamenti */}
+      {/* Appointments Table */}
       <div className="bg-white rounded-lg shadow p-6">
         <h2 className="text-xl font-semibold mb-4">Prossimi Appuntamenti</h2>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="text-left border-b">
-                <th className="pb-2">Cliente</th>
-                <th className="pb-2">Servizio</th>
-                <th className="pb-2">Data</th>
-                <th className="pb-2">Ora</th>
-                <th className="pb-2">Stato</th>
-                <th className="pb-2">Azioni</th>
+                <th className="pb-2 font-medium">Cliente</th>
+                <th className="pb-2 font-medium">Servizio</th>
+                <th className="pb-2 font-medium">Data</th>
+                <th className="pb-2 font-medium">Ora</th>
+                <th className="pb-2 font-medium">Stato</th>
+                <th className="pb-2 font-medium">Azioni</th>
               </tr>
             </thead>
             <tbody>
               {appointmentsData.map((appointment) => (
                 <tr key={appointment.id} className="border-b">
-                  <td className="py-2">{appointment.client}</td>
-                  <td className="py-2">{appointment.service}</td>
-                  <td className="py-2">{appointment.date}</td>
-                  <td className="py-2">{appointment.time}</td>
-                  <td className="py-2">
+                  <td className="py-3">{appointment.client}</td>
+                  <td className="py-3">{appointment.service}</td>
+                  <td className="py-3">{appointment.date}</td>
+                  <td className="py-3">{appointment.time}</td>
+                  <td className="py-3">
                     <span className={`px-2 py-1 rounded-full text-xs ${
-                      appointment.status === 'confermato' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                      appointment.status === 'confermato' 
+                        ? 'bg-green-100 text-green-800' 
+                        : 'bg-yellow-100 text-yellow-800'
                     }`}>
                       {appointment.status}
                     </span>
                   </td>
-                  <td className="py-2">
+                  <td className="py-3">
                     <div className="flex gap-2">
-                      <button className="text-blue-500">Modifica</button>
-                      <button className="text-red-500">Cancella</button>
+                      <button className="text-blue-500 hover:text-blue-700">Modifica</button>
+                      <button className="text-red-500 hover:text-red-700">Cancella</button>
                     </div>
                   </td>
                 </tr>

@@ -27,17 +27,19 @@ const NotificationSystem = () => {
         <div 
           key={notification.id} 
           className={`
-            p-4 rounded-lg shadow-lg
-            ${notification.type === 'success' ? 'bg-green-50 border-green-500' :
-              notification.type === 'warning' ? 'bg-yellow-50 border-yellow-500' :
-              'bg-red-50 border-red-500'}
-            border-l-4
+            p-4 rounded-lg shadow-lg relative
+            ${notification.type === 'success' 
+              ? 'bg-green-50 border-l-4 border-green-500' 
+              : notification.type === 'warning'
+              ? 'bg-yellow-50 border-l-4 border-yellow-500'
+              : 'bg-red-50 border-l-4 border-red-500'
+            }
           `}
         >
           <div className="flex justify-between items-start">
             <div>
-              <h3 className="font-semibold">{notification.title}</h3>
-              <p className="text-sm mt-1">{notification.message}</p>
+              <h3 className="font-semibold text-gray-800">{notification.title}</h3>
+              <p className="text-sm text-gray-600 mt-1">{notification.message}</p>
             </div>
             <button 
               onClick={() => removeNotification(notification.id)}
